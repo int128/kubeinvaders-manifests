@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubeinvaders 
+  namespace: kubeinvaders
+spec:
+  rules:
+  - host: kubeinvaders.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kubeinvaders 
+          servicePort: 8080

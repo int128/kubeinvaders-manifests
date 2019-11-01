@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kubeinvaders
+  namespace: kubeinvaders
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kubeinvaders
+    spec:
+      serviceAccountName: kubeinvaders
+      containers:
+      - image: docker.io/luckysideburn/kubeinvaders:latest
+        name: kubeinvaders
+        resources:
+          requests:
+            memory: 128Mi
+          limits:
+            memory: 128Mi
+        env:
+        - name: UPDATETIME
+          value: "0.5"
+        - name: ALIENPROXIMITY
+          value: "15"
+        - name: HITSLIMIT
+          value: "0"
+        - name: NAMESPACE
+          value: hipster-shop
+        - name: ROUTE_HOST
+          value: kubeinvaders.example.com
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: REPLACE_TOKEN_NAME
+              key: token
+        ports:
+        - containerPort: 8080
